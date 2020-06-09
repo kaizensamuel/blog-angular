@@ -15,11 +15,19 @@ export class UserService{
         return "hola mundo service";
     }
     register (user): Observable<any> {
+        return this.envioPost('register',user);
+    }
+    signup(user, getTokens = null): Observable<any>{
+        if(getTokens == null){
+            user.getTokens = 'true';
+        }
+        return this.envioPost('login',user);
+    }
+    envioPost(ruta, user){
         let json= JSON.stringify(user);
         let params ='json='+json;
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-        console.log(params);
-        return this._http.post<Observable<any>>(this.url+'register', params, {headers: headers});
+        return this._http.post<Observable<any>>(this.url+ruta, params, {headers: headers});
     }
 }
 
