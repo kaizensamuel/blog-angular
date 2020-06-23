@@ -26,6 +26,16 @@ export class UserService{
         }
         return this.envioPost('login',user);
     }
+    update(token, user): Observable<any>{
+        let json= JSON.stringify(user);
+        let params ='json='+json; 
+       
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+            .set('Authorization',String(token))
+            .set('Access-Control-Allow-Methods', 'PUT') 
+            .set('Access-Control-Allow-Origin', '*');
+        return this._http.put(this.url+'user/update', params, {headers: headers});
+    }
     envioPost(ruta, user): Observable<any>{
         let json= JSON.stringify(user);
         let params ='json='+json;
